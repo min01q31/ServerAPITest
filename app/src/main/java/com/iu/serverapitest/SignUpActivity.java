@@ -9,6 +9,9 @@ import android.widget.Toast;
 
 import com.iu.serverapitest.utiles.PasswordUtil;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 
 import okhttp3.Call;
@@ -71,7 +74,7 @@ public class SignUpActivity extends BaseActivity {
                         .add("user_id", userIDEdt.getText().toString())
                         .add("password", PasswordUtil.getEncrytedPassword(userPWEdt.getText().toString()))
                         .add("name", userNameEdt.getText().toString())
-                        .add("phone", userPWEdt.getText().toString())
+                        .add("phone", userPhoneEdt.getText().toString())
                         .add("email", userEmailEdt.getText().toString())
                         .build();
 
@@ -93,7 +96,34 @@ public class SignUpActivity extends BaseActivity {
 
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
-                        Log.d("회원가입 리스폰스", response.body().string());
+                        String responseBody = response.body().string();
+                        Log.d("회원가입 리스폰스", responseBody);
+
+                        try {
+                            JSONObject root = new JSONObject(responseBody);
+                            final int code = root.getInt("code");
+                            final String message = root.getString("message");
+
+                            Log.d("회원가입 리스폰스", "코드" + code);
+                            Log.d("회원가입 리스폰스", "메세지" + message);
+
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (code == 200){
+                                        Toast.makeText(mContext, "회원가입에 성공했습니다.", Toast.LENGTH_SHORT).show();
+                                        finish();
+                                    }
+                                    else{
+                                        Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
 
