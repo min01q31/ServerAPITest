@@ -1,5 +1,6 @@
 package com.iu.serverapitest;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -32,6 +33,7 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
 
 
+
         bindViews();
         setupEvents();
         setValues();
@@ -40,6 +42,13 @@ public class MainActivity extends BaseActivity {
     @Override
     public void setupEvents() {
 
+        signUpTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new  Intent(mContext, SignUpActivity.class);
+                startActivity(intent);
+            }
+        });
         logInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
