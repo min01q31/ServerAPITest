@@ -33,7 +33,6 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
 
 
-
         bindViews();
         setupEvents();
         setValues();
@@ -45,7 +44,7 @@ public class MainActivity extends BaseActivity {
         signUpTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new  Intent(mContext, SignUpActivity.class);
+                Intent intent = new Intent(mContext, SignUpActivity.class);
                 startActivity(intent);
             }
         });
@@ -91,7 +90,7 @@ public class MainActivity extends BaseActivity {
                         });*/
 
                         String responseBody = response.body().string();
-                        Log.d("응답내용",responseBody);
+                        Log.d("응답내용", responseBody);
                     }
                 });
             }
